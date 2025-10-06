@@ -1,0 +1,46 @@
+# 1. Define your input variables from the user request
+starting_city = "Detroit, MI"
+ending_city = "Houston, TX"
+number_of_people = 2
+age_group = "Young Adults (25-35)" # e.g., "Family with young children", "Seniors (65+)"
+trip_type = "Adventure and Food" # e.g., "Relaxing and Scenic", "Historical landmarks"
+number_of_days = 5
+
+# 2. Engineer the prompt using an f-string
+# This prompt is structured to be clear, provide context, and demand a specific JSON output.
+prompt = f"""
+You are an expert travel AI specializing in personalized road trip itineraries.
+
+Your task is to generate a detailed {number_of_days}-day road trip itinerary from {starting_city} to {ending_city}.
+
+The itinerary must be tailored for the following context:
+- Group Size: {number_of_people} people
+- Age Group: {age_group}
+- Trip Theme: {trip_type}
+
+Please provide the response as a single, valid JSON object. Do not include any text, explanation, or markdown formatting outside of the JSON object itself.
+
+The root of the JSON object must be a key named "itinerary" which contains an array of day objects.
+
+Each day object in the array must conform to the following schema:
+- "day" (integer): The day number of the trip.
+- "driving_summary" (object): An object containing the driving details for the day.
+  - "start" (string): The starting location for the day's drive.
+  - "end" (string): The ending location for the day's drive.
+  - "estimated_time" (string): The approximate driving duration.
+- "activities" (array of objects): An array of suggested activities. Each activity object must have:
+  - "name" (string): The name of the place or activity.
+  - "description" (string): A brief, one-sentence description explaining why it fits the trip theme.
+- "food_suggestions" (array of objects): An array of dining suggestions. Each food object must have:
+  - "name" (string): The name of the restaurant or type of food.
+  - "description" (string): A brief, one-sentence description (e.g., "Known for the best local BBQ").
+- "overnight_lodging_suggestion" (object): An object describing the lodging recommendation.
+  - "location" (string): The city or area to stay in.
+  - "description" (string): A brief suggestion for the type of lodging that fits the trip theme (e.g., "A boutique hotel in the downtown arts district.").
+"""
+
+# 3. (From previous example) Send to the API and parse the JSON response
+# response = client.models.generate_content(...)
+# clean_json_text = response.text.strip().replace("```json", "").replace("```", "")
+# itinerary_data = json.loads(clean_json_text)
+# print(json.dumps(itinerary_data, indent=2))

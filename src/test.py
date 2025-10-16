@@ -21,6 +21,7 @@ def promptPrint():
     age_group = "Young Adults (25-35)" # e.g., "Family with young children", "Seniors (65+)"
     trip_type = "Adventure and Food" # e.g., "Relaxing and Scenic", "Historical landmarks"
     number_of_days = 5
+    others= "avoid bars"
 
 
     response = client.models.generate_content(
@@ -53,6 +54,9 @@ def promptPrint():
             - "overnight_lodging_suggestion" (object): An object describing the lodging recommendation.
             - "location" (string): The city or area to stay in.
             - "description" (string): A brief suggestion for the type of lodging that fits the trip theme (e.g., "A boutique hotel in the downtown arts district.").
+            
+            And consider this special reuest.
+            {others}
             """
             )
 

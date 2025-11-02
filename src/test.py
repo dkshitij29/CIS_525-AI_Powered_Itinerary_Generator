@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import google.generativeai
 #from IPython.display import Markdown, display, update_display
+from google.genai import types
 
 def promptPrint():
     load_dotenv()
@@ -25,7 +26,7 @@ def promptPrint():
 
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="models/gemini-2.5-flash",
         contents = f"""
             You are an expert travel AI specializing in personalized road trip itineraries.
             Your task is to generate a detailed {number_of_days}-day road trip itinerary from {starting_city} to {ending_city}.
@@ -57,7 +58,9 @@ def promptPrint():
             
             And consider this special reuest.
             {others}
-            """
+            """,
+            config=types.GenerateContentConfig(
+                thinking_config=types.ThinkingConfig(thinking_budget=0))
             )
 
     print(response.text)

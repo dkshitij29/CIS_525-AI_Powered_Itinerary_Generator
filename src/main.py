@@ -64,6 +64,14 @@ def promptPrint(
     return response.text
 
 app = FastAPI()
+origins = [
+    "http://localhost",
+    "http://localhost:3000", 
+    "http://localhost:5173", 
+    "http://localhost:8080", 
+    "http://localhost:5000",
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # You can restrict this later if needed

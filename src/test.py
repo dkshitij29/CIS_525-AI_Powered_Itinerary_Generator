@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 import google.generativeai
 #from IPython.display import Markdown, display, update_display
+from google.genai import types
 
 def promptPrint():
     load_dotenv()
@@ -21,10 +22,11 @@ def promptPrint():
     age_group = "Young Adults (25-35)" # e.g., "Family with young children", "Seniors (65+)"
     trip_type = "Adventure and Food" # e.g., "Relaxing and Scenic", "Historical landmarks"
     number_of_days = 5
+    others= "avoid bars"
 
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model="models/gemini-2.5-flash",
         contents = f"""
             You are an expert travel AI specializing in personalized road trip itineraries.
             Your task is to generate a detailed {number_of_days}-day road trip itinerary from {starting_city} to {ending_city}.
@@ -53,7 +55,12 @@ def promptPrint():
             - "overnight_lodging_suggestion" (object): An object describing the lodging recommendation.
             - "location" (string): The city or area to stay in.
             - "description" (string): A brief suggestion for the type of lodging that fits the trip theme (e.g., "A boutique hotel in the downtown arts district.").
-            """
+            
+            And consider this special reuest.
+            {others}
+            """,
+            config=types.GenerateContentConfig(
+                thinking_config=types.ThinkingConfig(thinking_budget=0))
             )
 
     print(response.text)
